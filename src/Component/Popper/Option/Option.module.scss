@@ -1,0 +1,26 @@
+.menu-list {
+  width: 224px;
+}
+.menu-body {
+  overflow-y: auto;
+}
+//Language option list
+.header {
+  position: relative;
+  height: 50px;
+}
+.back-btn {
+  background-color: transparent;
+  width: 12px;
+  height: 100%;
+  margin-left: 15px;
+  padding: 0 10px;
+  cursor: pointer;
+}
+.header-title {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-weight: 600;
+}

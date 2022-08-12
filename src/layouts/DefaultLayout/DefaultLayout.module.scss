@@ -1,0 +1,23 @@
+.wrapper {
+  display: flex;
+  flex-direction: column; //can doc cac flex item
+  align-items: center;
+}
+.container {
+  width: 1150px;
+  min-height: 100%;
+  //   background-color: #ccc;
+  display: flex;
+  padding: 0 24px;
+  margin-top: 60px;
+  height: 2000px;
+}
+.content {
+  flex: 1;
+  //   background-color: #ccc;
+  margin-right: 16px;
+  margin-left: 16px;
+  // max-width: 692px;
+  padding: 24px 0;
+  position: relative;
+}
