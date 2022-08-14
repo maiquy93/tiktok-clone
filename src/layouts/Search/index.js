@@ -1,6 +1,6 @@
 import Tippy from "@tippyjs/react";
 import "tippy.js/dist/tippy.css";
-
+import { memo, useCallback } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCircleXmark,
@@ -9,7 +9,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import styles from "./search.module.scss";
 import classNames from "classnames/bind";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 
 import * as request from "utils/request";
 import { Wrapper } from "Component/Popper";
@@ -26,7 +26,7 @@ function Searchbox() {
   const debounceValue = useDebounce(searchValue, 500);
 
   const [show, setShow] = useState(false);
-  const onShow = onFocusIput && searchResult.length > 0;
+  const onShow = useMemo(()=> onFocusIput && searchResult.length > 0,[onFocusIput,searchResult]);
 
   useEffect(() => {
     setShow(onShow);
@@ -59,12 +59,12 @@ function Searchbox() {
     getSearchAPI();
   }, [debounceValue]);
 
-  const handleChange = e => {
+  const handleChange = useCallback( e => {
     const inputValue = e.target.value;
     if (!inputValue.startsWith(" ")) {
       setSearchValue(inputValue);
     }
-  };
+  },[]);
   const handleResultShow = () => {
     setOnFocusInput(false);
   };
@@ -136,4 +136,4 @@ function Searchbox() {
   );
 }
 
-export default Searchbox;
+export default memo(Searchbox);

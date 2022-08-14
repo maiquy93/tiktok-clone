@@ -5,16 +5,14 @@ import classNames from "classnames/bind";
 import Wrapper from "../Wrapper";
 import Optionlist from "./Optionlist";
 import LanguageOption from "./LanguageOption";
-import { useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 
 const cx = classNames.bind(styles);
 const defaultFn = () => {};
 function Option({ children, items = [], handleChange = defaultFn }) {
   const [history, setHistory] = useState([{ data: items }]);
   //ban dau current.data = items
-  // console.log(history);
-
-  const current1 = history[history.length - 1];
+  const current1 = useMemo(()=>history[history.length - 1],[history]);
   const renderlist = () => {
     return current1.data.map((item, index) => {
       const isParent = !!item.children;
@@ -36,6 +34,14 @@ function Option({ children, items = [], handleChange = defaultFn }) {
       );
     });
   };
+
+  const handleGoBack = useCallback(()=>{
+    setHistory(prev => prev.slice(0, prev.length - 1));
+  },[])
+  //reset to first menu
+  const handleBackToTop = ()=>{
+    setHistory(prev => prev.slice(0, 1));
+  }
   return (
     <Tippy
       hideOnClick={false}
@@ -49,18 +55,14 @@ function Option({ children, items = [], handleChange = defaultFn }) {
             {history.length > 1 && (
               <LanguageOption
                 title={current1.title}
-                onBack={() => {
-                  setHistory(prev => prev.slice(0, prev.length - 1));
-                }}
+                onBack={handleGoBack}
               />
             )}
             <div className={cx("menu-body")}>{renderlist()}</div>
           </Wrapper>
         </div>
       )}
-      onHide={() => {
-        setHistory(prev => prev.slice(0, 1));
-      }}
+      onHide={handleBackToTop}
     >
       {children}
     </Tippy>
