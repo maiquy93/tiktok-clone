@@ -1,0 +1,22 @@
+//menu-item
+.menu-item {
+  display: flex;
+  padding: 8px 8px;
+  text-decoration: none;
+  font-size: 1.8rem;
+  color: #000;
+  font-weight: 700;
+  width: 100%;
+  border-radius: 4px;
+  display: inline-block;
+  transition: background-color ease-in-out 200ms;
+  &:hover {
+    background-color: rgba(105, 119, 131, 0.11);
+  }
+}
+.active {
+  color: red;
+}
+.title {
+  margin-left: 10px;
+}
