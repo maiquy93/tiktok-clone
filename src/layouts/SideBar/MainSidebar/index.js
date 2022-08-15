@@ -11,7 +11,7 @@ import {
 
 const cx = classNames.bind(styles);
 
-function SideBar() {
+function MainSideBar() {
   return (
     <aside className={cx("wrapper")}>
       <Menu>
@@ -36,4 +36,4 @@ function SideBar() {
   );
 }
 
-export default SideBar;
+export default MainSideBar;

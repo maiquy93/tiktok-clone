@@ -19,9 +19,9 @@ import {
   faArrowRightFromBracket,
 } from "@fortawesome/free-solid-svg-icons";
 import Button from "Component/Button";
-import Option from "../../../Component/Popper/Option/Option";
-import Images from "../../../Component/Images/Images";
-import Searchbox from "../../Search";
+import Option from "../../Component/Popper/Option/Option";
+import Images from "../../Component/Images/Images";
+import Searchbox from "../Search";
 
 const cx = classNames.bind(styles);
 const GUESS_MENU = [
