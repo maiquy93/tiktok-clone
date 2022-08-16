@@ -26,7 +26,10 @@ function Searchbox() {
   const debounceValue = useDebounce(searchValue, 500);
 
   const [show, setShow] = useState(false);
-  const onShow = useMemo(()=> onFocusIput && searchResult.length > 0,[onFocusIput,searchResult]);
+  const onShow = useMemo(
+    () => onFocusIput && searchResult.length > 0,
+    [onFocusIput, searchResult]
+  );
 
   useEffect(() => {
     setShow(onShow);
@@ -59,12 +62,12 @@ function Searchbox() {
     getSearchAPI();
   }, [debounceValue]);
 
-  const handleChange = useCallback( e => {
+  const handleChange = useCallback(e => {
     const inputValue = e.target.value;
     if (!inputValue.startsWith(" ")) {
       setSearchValue(inputValue);
     }
-  },[]);
+  }, []);
   const handleResultShow = () => {
     setOnFocusInput(false);
   };

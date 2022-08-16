@@ -8,7 +8,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 
 const cx = classNames.bind(styles);
-function AccountItem({ fullname, nickname, avatar, check, to }) {
+function AccountItem({ fullname, nickname, avatar, check, to, small, bold }) {
   const [fallback, setFallback] = useState("");
   const handleAvatar = () => {
     setFallback(images.noImage);
@@ -17,13 +17,13 @@ function AccountItem({ fullname, nickname, avatar, check, to }) {
     <Link to={to} className={cx("wrapper")}>
       <img
         src={fallback || avatar}
-        className={cx("avatar")}
+        className={cx("avatar", { small })}
         alt={nickname}
         onError={handleAvatar}
       />
       <div className={cx("info")}>
         <p className={cx("fullname")}>
-          <span>{fullname}</span>
+          <span className={cx({ bold })}>{fullname}</span>
           {check && <FontAwesomeIcon icon={faCheck} className={cx("check")} />}
         </p>
         <p className={cx("username")}>{nickname}</p>
