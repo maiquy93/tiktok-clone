@@ -12,7 +12,7 @@ const defaultFn = () => {};
 function Option({ children, items = [], handleChange = defaultFn }) {
   const [history, setHistory] = useState([{ data: items }]);
   //ban dau current.data = items
-  const current1 = useMemo(()=>history[history.length - 1],[history]);
+  const current1 = useMemo(() => history[history.length - 1], [history]);
   const renderlist = () => {
     return current1.data.map((item, index) => {
       const isParent = !!item.children;
@@ -35,13 +35,13 @@ function Option({ children, items = [], handleChange = defaultFn }) {
     });
   };
 
-  const handleGoBack = useCallback(()=>{
+  const handleGoBack = useCallback(() => {
     setHistory(prev => prev.slice(0, prev.length - 1));
-  },[])
+  }, []);
   //reset to first menu
-  const handleBackToTop = ()=>{
+  const handleBackToTop = () => {
     setHistory(prev => prev.slice(0, 1));
-  }
+  };
   return (
     <Tippy
       hideOnClick={false}
@@ -53,10 +53,7 @@ function Option({ children, items = [], handleChange = defaultFn }) {
         <div className={cx("menu-list")} tabIndex="-1" {...attrs}>
           <Wrapper>
             {history.length > 1 && (
-              <LanguageOption
-                title={current1.title}
-                onBack={handleGoBack}
-              />
+              <LanguageOption title={current1.title} onBack={handleGoBack} />
             )}
             <div className={cx("menu-body")}>{renderlist()}</div>
           </Wrapper>
