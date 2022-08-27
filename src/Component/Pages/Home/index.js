@@ -1,73 +1,61 @@
 import styles from "./home.module.scss";
 import classNames from "classnames/bind";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import InfiniteScroll from "react-infinite-scroll-component";
+
 import MainSideBar from "layouts/SideBar/MainSidebar";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPause, faPlay } from "@fortawesome/free-solid-svg-icons";
-import { useRef, useState } from "react";
+import VideoItem from "Component/videoItem/VideoItem";
 
 const cx = classNames.bind(styles);
 
 function Home() {
-  const [isPlaying, setIsPlaying] = useState(false);
-  const videoRef = useRef();
+  const [data, setData] = useState([]);
+  const [page, setPage] = useState(2);
+  const [noMore, setnoMore] = useState(false);
 
-  const handlePlay = () => {
-    videoRef.current.play();
+  useEffect(() => {
+    axios
+      .get(`http://localhost:8000/videos?limit=3&page=1`)
+      .then(res => {
+        setData(res.data.docs);
+      })
+      .catch(err => console.log(err));
+  }, []);
+  //function render video
+  const renderVideo = data => {
+    return data.map(video => {
+      return <VideoItem key={video._id} video={video} />;
+    });
   };
-  const handlePause = () => {
-    videoRef.current.pause();
+  //fetch data
+  const fetchData = () => {
+    axios.get(`http://localhost:8000/videos?limit=3&page=${page}`).then(res => {
+      setData([...data, res.data.docs]);
+      setPage(prev => prev + 1);
+      setnoMore(false);
+    });
   };
+
   return (
     <div className={cx("home-page")}>
       <div className={cx("home-bar")}>
         <MainSideBar />
       </div>
       <div className={cx("home-content")}>
-        <div className={cx("item-container")}>
-          <a href="/">
-            <img
-              alt="sadas"
-              className={cx("item-avatar")}
-              src="https://media-cdn-v2.laodong.vn/storage/newsportal/2020/12/21/864060/Ngoc-Trinh-1.jpg"
-            ></img>
-          </a>
-          <div className={cx("content-container")}>
-            <div className={cx("info-wrapper")}>
-              <div className={cx("user-info")}>
-                <div className={cx("user-box")}>
-                  <a className={cx("user-name")} href="/">
-                    Ngon99br
-                  </a>
-                  <p className={cx("info-cap")}>Giai tri moi ngay</p>
-                </div>
-                <button className={cx("follow-btn")}>Follow</button>
-              </div>
-              <p className={cx("music-title")}>Music</p>
-            </div>
-            <div className={cx("video-container")}>
-              <div className={cx("nav")}></div>
-              <div className={cx("video-wrapper")}>
-                <video
-                  controls
-                  className={cx("video-item")}
-                  ref={videoRef}
-                  onPlay={() => setIsPlaying(true)}
-                  onPause={() => setIsPlaying(false)}
-                  src="https://v16-webapp.tiktok.com/1444e73b854917eb7acea6c926d57c9a/63076b17/video/tos/useast2a/tos-useast2a-pve-0037-aiso/6393eb65deb040caa2776ba93069d29f/?a=1988&ch=0&cr=0&dr=0&lr=tiktok&cd=0%7C0%7C1%7C0&cv=1&br=2092&bt=1046&cs=0&ds=3&ft=z_piDPWT2NvjVPb1IozfuCYQFAe4nRQjlOp~2tOB&mime_type=video_mp4&qs=0&rc=Z2g0Nmg7NTs8ZGU5Nzg8PEBpM2g8cWQ6ZnM6ZTMzZjgzM0AvNWEwX2A2XjQxLTIxLi00YSNeMmFvcjRfcW1gLS1kL2Nzcw%3D%3D&l=20220825062904010245100117250DDB51&btag=80000"
-                ></video>
-                {!isPlaying ? (
-                  <button className={cx("play-btn")} onClick={handlePlay}>
-                    <FontAwesomeIcon icon={faPlay} />
-                  </button>
-                ) : (
-                  <button className={cx("play-btn")} onClick={handlePause}>
-                    <FontAwesomeIcon icon={faPause} />
-                  </button>
-                )}
-              </div>
-            </div>
-          </div>
-        </div>
+        <InfiniteScroll
+          dataLength={data.length} //This is important field to render the next data
+          next={fetchData}
+          hasMore={noMore}
+          loader={<h4>Loading...</h4>}
+          endMessage={
+            <p style={{ textAlign: "center" }}>
+              <b>Yay! You have seen it all</b>
+            </p>
+          }
+        >
+          {renderVideo(data)}
+        </InfiniteScroll>
       </div>
     </div>
   );

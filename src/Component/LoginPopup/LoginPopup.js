@@ -20,7 +20,6 @@ function LoginPopup({ btnOnly, nonetips }) {
   useEffect(() => {
     window.addEventListener("keypress", function (event) {
       if (event.key === "Enter") {
-        event.preventDefault();
         loginRequire(event);
       }
     });

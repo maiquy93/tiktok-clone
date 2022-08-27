@@ -1,8 +1,8 @@
 // localStorage.setItem("isLogin", JSON.stringify(false));
-const newdata = JSON.parse(localStorage.getItem("userdata"));
+const newdata = JSON.parse(localStorage.getItem("userdata")) || {};
 const initState = {
   loginState: {
-    value: JSON.parse(localStorage.getItem("isLogin")),
+    value: JSON.parse(localStorage.getItem("isLogin")) || false,
   },
   userdata: {
     name: newdata.name,
