@@ -1,6 +1,6 @@
 import styles from "./loginpopup.module.scss";
 import classNames from "classnames/bind";
-import { memo, useEffect, useState, useRef } from "react";
+import { memo, useState, useRef } from "react";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { loginStateCreator, updateUserdataCreator } from "redux/action";
@@ -17,21 +17,11 @@ function LoginPopup({ btnOnly, nonetips }) {
   const dispatch = useDispatch();
 
   //Press Enter to login
-  useEffect(() => {
-    window.addEventListener("keypress", function (event) {
-      if (event.key === "Enter") {
-        loginRequire(event);
-      }
-    });
-    return () => {
-      window.removeEventListener("keypress", function (event) {
-        if (event.key === "Enter") {
-          event.preventDefault();
-          loginRequire(event);
-        }
-      });
-    };
-  });
+  const pressEnter = event => {
+    if (event.keyCode === 16) {
+      loginRequire();
+    }
+  };
   //valid password fontend
   const passwordNoctice = () => {
     if (passwordValue.length < 6) {
@@ -133,6 +123,7 @@ function LoginPopup({ btnOnly, nonetips }) {
               value={passwordValue}
               onChange={e => setPasswordVaule(e.target.value)}
               onBlur={passwordNoctice}
+              onKeyDown={e => pressEnter(e)}
               required
             ></input>
             {passwordWarning && (

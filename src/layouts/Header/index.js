@@ -28,6 +28,8 @@ import { loginStateSelector, userdataSelector } from "redux/selector";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { loginStateCreator } from "redux/action";
+import SignupPopup from "Component/signupPopup/SignupPopup";
+
 // import { useEffect, useState } from "react";
 
 const cx = classNames.bind(styles);
@@ -109,7 +111,7 @@ const USER_MENU = [
 function Header() {
   const { value } = useSelector(loginStateSelector);
   const userdata = useSelector(userdataSelector);
-  console.log(userdata);
+
   //handle logics
   const dispatch = useDispatch();
   const handleMenuChange = optionChoose => {
@@ -239,6 +241,7 @@ function Header() {
                 Upload
               </Button>
               <LoginPopup nonetips btnOnly />
+              <SignupPopup btnOnly />
             </div>
           )}
           <Option

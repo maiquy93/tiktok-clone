@@ -9,6 +9,7 @@ function Button({
   to,
   primary,
   upload,
+  signup,
   rounder,
   textStyle,
   separate,
@@ -34,6 +35,7 @@ function Button({
   const classes = cx("wrapper", {
     primary,
     upload,
+    signup,
     rounder,
     textStyle,
     separate,

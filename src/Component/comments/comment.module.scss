@@ -1,0 +1,38 @@
+.comment-container {
+  display: flex;
+  margin: 5px;
+  width: 720px;
+  // height: 500px;
+  // margin-left: 50px;
+  // background-color: rgba(168, 211, 211, 0.534);
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior-y: contain;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+.cmt-user-avatar {
+  margin-top: 20px;
+  margin-left: 10px;
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  object-fit: fill;
+}
+.cmt-user-info {
+  margin-left: 10px;
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+.cmt-user {
+  font-size: 1.5rem;
+  font-weight: 600;
+  text-decoration: none;
+  color: #000;
+}
+.cmt-content {
+  margin-right: 40px;
+  font-size: 1.5rem;
+  color: rgba(0, 0, 0, 0.815);
+}

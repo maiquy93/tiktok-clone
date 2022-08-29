@@ -12,7 +12,7 @@ const cx = classNames.bind(styles);
 function Home() {
   const [data, setData] = useState([]);
   const [page, setPage] = useState(2);
-  const [noMore, setnoMore] = useState(false);
+  const [noMore, setnoMore] = useState(true);
 
   useEffect(() => {
     axios
@@ -20,7 +20,7 @@ function Home() {
       .then(res => {
         setData(res.data.docs);
       })
-      .catch(err => console.log(err));
+      .catch(err => console("Can not connect"));
   }, []);
   //function render video
   const renderVideo = data => {
@@ -31,7 +31,7 @@ function Home() {
   //fetch data
   const fetchData = () => {
     axios.get(`http://localhost:8000/videos?limit=3&page=${page}`).then(res => {
-      setData([...data, res.data.docs]);
+      setData([...data, ...res.data.docs]);
       setPage(prev => prev + 1);
       setnoMore(false);
     });

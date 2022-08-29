@@ -2,12 +2,15 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCommentDots,
   faHeart,
+  faMusic,
   faPause,
   faPlay,
 } from "@fortawesome/free-solid-svg-icons";
 import styles from "./videoitem.module.scss";
 import classNames from "classnames/bind";
 import { useRef, useState } from "react";
+
+import Comment from "Component/comments/Comment";
 
 const cx = classNames.bind(styles);
 
@@ -20,6 +23,10 @@ function VideoItem({ video }) {
 
   const videoRef = useRef();
   // const videoWidth = videoRef.current.offsetWidth;
+
+  //xu ly btn follow
+  const currentUser = JSON.parse(localStorage.getItem("userdata"))?._id;
+  const followBtnShow = currentUser === video.author?.userID;
 
   const handlePlay = () => {
     videoRef.current.play();
@@ -42,23 +49,33 @@ function VideoItem({ video }) {
     <div className={cx("item-container")}>
       <a href={video.link}>
         <img
-          alt={video.author.usernickname}
+          alt={video.author?.usernickname}
           className={cx("item-avatar")}
-          src={video.author.userAvatar}
+          src={video.author?.userAvatar}
         ></img>
       </a>
       <div className={cx("content-container")}>
         <div className={cx("info-wrapper")}>
           <div className={cx("user-info")}>
             <div className={cx("user-box")}>
-              <a className={cx("user-name")} href="/">
-                {video.author.userName}
+              <a className={cx("user-name")} href={`/@${video.author.link}`}>
+                {video.author?.userName}
               </a>
-              <p className={cx("info-cap")}>{video.author.usernickname}</p>
+              <p className={cx("info-cap")}>{video.author?.usernickname}</p>
             </div>
-            <button className={cx("follow-btn")}>Follow</button>
+
+            {!followBtnShow && (
+              <button className={cx("follow-btn")}>Follow</button>
+            )}
           </div>
-          <p className={cx("music-title")}>{video.music}</p>
+          <p className={cx("video-title")}>{video.videoTitle}</p>
+          <p className={cx("music-title")}>
+            <FontAwesomeIcon
+              icon={faMusic}
+              style={{ fontSize: "small", marginRight: "5px" }}
+            />
+            <i>{video.music}</i>
+          </p>
         </div>
         <div className={cx("video-container")}>
           <div className={cx("video-wrapper")}>
@@ -111,29 +128,7 @@ function VideoItem({ video }) {
             </button>
             <button className={cx("nav-btn")}>Share</button>
           </div>
-          {cmtShow && (
-            <div className={cx("comment-container")}>
-              <a href="/">
-                <img
-                  className={cx("cmt-user-avatar")}
-                  src="https://sohanews.sohacdn.com/2017/photo-1-1496635745742.jpg"
-                  alt="dasdas"
-                />
-              </a>
-              <div className={cx("cmt-user-info")}>
-                <a href="/" className={cx("cmt-user")}>
-                  <span>Đổng Khiết</span>
-                </a>
-                <span className={cx("cmt-content")}>
-                  Sinh năm 1980 tại Liêu Ninh, Trung Quốc, Đổng Khiết xuất thân
-                  từ vai trò là diễn viên múa. Sau khi tốt nghiệp trường múa,
-                  Đổng Khiết được cử về Đoàn Ca múa nhạc Quân khu Quảng Châu.
-                  Khác với nhiều diễn viên trẻ, con đường đến với nghệ thuật của
-                  Đổng Khiết khá êm đềm.
-                </span>
-              </div>
-            </div>
-          )}
+          {cmtShow && <Comment videoID={video._id} />}
         </div>
       </div>
     </div>
