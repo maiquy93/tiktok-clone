@@ -9,7 +9,6 @@ import {
 import styles from "./videoitem.module.scss";
 import classNames from "classnames/bind";
 import { useRef, useState } from "react";
-
 import Comment from "Component/comments/Comment";
 
 const cx = classNames.bind(styles);
@@ -128,7 +127,33 @@ function VideoItem({ video }) {
             </button>
             <button className={cx("nav-btn")}>Share</button>
           </div>
-          {cmtShow && <Comment videoID={video._id} />}
+          {cmtShow && (
+            <div className={cx("comments-container")}>
+              <div className={cx("comment-box")}>
+                <div className={cx("avt-input")}>
+                  <img
+                    className={cx("cmt-avatar")}
+                    src={
+                      JSON.parse(localStorage.getItem("userdata"))?.avatar || ""
+                    }
+                    alt={
+                      JSON.parse(localStorage.getItem("userdata"))?.name || ""
+                    }
+                  />
+                  <textarea
+                    className={cx("comments-input")}
+                    rows="2"
+                    placeholder="Write your comment..."
+                  ></textarea>
+                </div>
+                {/* <div className={cx("comment-nav")}>
+                  <button className={cx("comment-btn", "btn")}>Comment</button>
+                  <button className={cx("cancel-btn", "btn")}>Cancel</button>
+                </div> */}
+              </div>
+              <Comment videoID={video._id} />
+            </div>
+          )}
         </div>
       </div>
     </div>

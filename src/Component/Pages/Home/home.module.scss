@@ -6,22 +6,25 @@
   overflow-x: hidden;
   overflow-y: auto;
   overscroll-behavior-y: contain;
+  height: auto;
   position: fixed;
-  // perspective: 1px;
   width: 348px;
-  // transform-style: preserve-3d;
   z-index: 1;
-  height: 950px;
+  height: 855px;
 }
 .home-content {
   // margin-right: 16px;
   // margin-left: 16px;
   max-width: 800px;
-  padding: 24px 0;
+  padding: 10px 0;
   position: relative;
   left: 356px;
   height: 2000px;
   // display: flex;
+  h4 {
+    margin-top: 10px;
+    margin-left: 20px;
+  }
 }
 
 //video item css

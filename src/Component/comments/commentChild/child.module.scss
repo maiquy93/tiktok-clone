@@ -13,7 +13,7 @@
   z-index: 9;
 }
 .cmt-user-avatar {
-  margin-top: 20px;
+  //   margin-top: 20px;
   margin-left: 10px;
   height: 40px;
   width: 40px;
@@ -28,7 +28,7 @@
   flex-direction: column;
   background-color: rgba(207, 205, 205, 0.226);
   border-radius: 10px;
-  margin-top: 20px;
+  //   margin-top: 20px;
   margin-bottom: 10px;
   z-index: 1;
 }
@@ -58,6 +58,7 @@
 .option-btn {
   display: block;
   position: relative;
+  padding: 5px 10px;
   margin-right: 10px;
   font-weight: 100;
   background-color: transparent;

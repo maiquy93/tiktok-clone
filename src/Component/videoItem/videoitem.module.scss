@@ -94,8 +94,10 @@
 .nav {
   display: flex;
   width: 720px;
+  flex-direction: row !important;
   justify-content: space-between;
   margin-left: 10px;
+  transition: floor($number: 0);
   border-top: 0.5px solid rgb(161, 161, 161);
   border-bottom: 0.5px solid rgb(161, 161, 161);
   .like {
@@ -127,8 +129,10 @@
   margin-left: 2px;
 }
 //comment
-.comment-container {
+.comments-container {
   display: flex;
+  flex-direction: column;
+  margin-left: 10px !important;
   margin: 5px;
   width: 720px;
   // height: 500px;
@@ -165,3 +169,78 @@
   font-size: 1.5rem;
   color: rgba(0, 0, 0, 0.815);
 }
+.comment-box {
+  display: flex;
+  flex-direction: column;
+}
+.comments-input {
+  // flex: 1;
+  // margin: 0 60px;
+  font-family: "Times New Roman", Times, serif;
+  padding: 0px 0px;
+  font-size: 1.8rem;
+  border: none;
+  border-color: rgba(204, 205, 206, 0.103);
+  &:hover {
+    cursor: pointer;
+  }
+  &:focus {
+    border: none;
+    outline-color: rgb(145, 168, 168) !important;
+    outline-width: 0.1px;
+  }
+  &:active {
+  }
+}
+.avt-input {
+  display: flex;
+  margin-bottom: 10px;
+  width: 100%;
+  textarea {
+    margin-left: 10px;
+    margin-right: 20px;
+    text-align: start;
+    background-color: rgba(207, 205, 205, 0.226);
+    border-radius: 10px;
+    flex: 1;
+  }
+}
+.cmt-avatar {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-left: 10px;
+}
+.comment-nav {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 80px 0px 80px;
+}
+.btn {
+  font-size: 1.3rem;
+  padding: 5px 10px;
+  background-color: transparent;
+  &:hover {
+    cursor: pointer;
+  }
+}
+.comment-btn {
+  &:hover {
+    color: green;
+  }
+  &:active {
+    color: #000;
+  }
+}
+.cancel-btn {
+  &:hover {
+    color: red;
+  }
+  &:active {
+    color: #000;
+  }
+}
+// .btn + .btn {
+//   margin-left: 10px;
+// }
