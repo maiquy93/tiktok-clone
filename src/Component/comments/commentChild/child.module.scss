@@ -5,9 +5,9 @@
   // height: 500px;
   // margin-left: 50px;
   // background-color: rgba(168, 211, 211, 0.534);
-  overflow-x: hidden;
-  overflow-y: auto;
-  overscroll-behavior-y: contain;
+  // overflow-x: hidden;
+  // overflow-y: auto;
+  // overscroll-behavior-y: contain;
   // box-shadow: rgba(99, 99, 99, 0.2) 1px 0px 8px 0px;
   position: relative;
   z-index: 9;
@@ -81,4 +81,37 @@
 }
 .more-btn + .more-btn {
   margin-top: 5px;
+}
+.delete-alert {
+  position: absolute;
+  height: 60px;
+  width: 200px;
+  background-color: rgb(255, 255, 255);
+  // box-shadow: rgba(99, 99, 99, 0.2) 1px 0px 3px 0px;
+  z-index: 9;
+  right: 15px;
+  top: -10px;
+}
+.alert-title {
+  font-size: 1.2rem;
+}
+.btn-nav {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 40px;
+  margin-top: 5px;
+}
+.okbtn {
+  display: block;
+  width: 50px;
+  background-color: rgb(179, 26, 59);
+  color: #fff;
+  border-radius: 10px;
+}
+.cancelbtn {
+  display: block;
+  width: 50px;
+  color: #fff;
+  border-radius: 10px;
+  background-color: green;
 }
