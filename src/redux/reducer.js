@@ -1,5 +1,5 @@
 // localStorage.setItem("isLogin", JSON.stringify(false));
-const newdata = JSON.parse(localStorage.getItem("userdata")) || {};
+const newdata = JSON.parse(localStorage?.getItem("userdata")) || {};
 const initState = {
   loginState: {
     value: JSON.parse(localStorage.getItem("isLogin")) || false,
@@ -14,6 +14,7 @@ const initState = {
     userbackground: newdata.userbackground,
     createdAt: newdata.createdAt,
   },
+  cmtRefesh: false,
 };
 const rootReducer = (state = initState, action) => {
   switch (action.type) {
@@ -28,6 +29,11 @@ const rootReducer = (state = initState, action) => {
       return {
         ...state,
         userdata: action.payload,
+      };
+    case "cmtRefesh":
+      return {
+        ...state,
+        cmtRefesh: action.payload,
       };
     default:
       return state;

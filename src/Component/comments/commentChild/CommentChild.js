@@ -4,12 +4,20 @@ import styles from "./child.module.scss";
 import { faEllipsisVertical } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import axios from "axios";
+import { cmtRefeshCreator } from "redux/action";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { cmtRefeshSelector } from "redux/selector";
 
 const cx = classNames.bind(styles);
 
 function CommentChild({ comment }) {
   const [optionShow, setOptionShow] = useState(false);
   const [alertshow, setAlertShow] = useState(false);
+
+  const dispatch = useDispatch();
+  const cmtRefesh = useSelector(cmtRefeshSelector);
+  console.log(cmtRefesh);
   const currentUser =
     JSON?.parse(localStorage?.getItem("userdata"))?._id || undefined;
   const handleDeleteShow = () => {
@@ -27,6 +35,7 @@ function CommentChild({ comment }) {
 
     setAlertShow(false);
     setOptionShow(false);
+    dispatch(cmtRefeshCreator(!cmtRefesh));
   };
 
   return (

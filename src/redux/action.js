@@ -10,3 +10,9 @@ export const updateUserdataCreator = data => {
     payload: data,
   };
 };
+export const cmtRefeshCreator = data => {
+  return {
+    type: "cmtRefesh",
+    payload: data,
+  };
+};

@@ -13,6 +13,9 @@ import Comment from "Component/comments/Comment";
 import { useSelector } from "react-redux";
 import { loginStateSelector } from "redux/selector";
 import axios from "axios";
+import { cmtRefeshSelector } from "redux/selector";
+import { useDispatch } from "react-redux";
+import { cmtRefeshCreator } from "redux/action";
 
 const cx = classNames.bind(styles);
 
@@ -24,9 +27,11 @@ function VideoItem({ video }) {
   const [commentValue, setCommentValue] = useState("");
 
   const loginState = useSelector(loginStateSelector);
-  const [cmtRefresh, setCommentsRrefesh] = useState(false);
 
   const videoRef = useRef();
+
+  const cmtRefesh = useSelector(cmtRefeshSelector);
+  const dispatch = useDispatch();
 
   // const videoWidth = videoRef.current.offsetWidth;
 
@@ -52,8 +57,8 @@ function VideoItem({ video }) {
   }
   //
   const handleComment = async e => {
-    if (e.keyCode === 13 && commentValue.trim() != "") {
-      const res = await axios.post("http://localhost:8000/commentpost", {
+    if (e.keyCode === 13 && commentValue.trim() !== "") {
+      await axios.post("http://localhost:8000/commentpost", {
         vidID: video._id,
         content: commentValue,
         author: {
@@ -63,7 +68,7 @@ function VideoItem({ video }) {
           avatar: JSON.parse(localStorage?.getItem("userdata"))?.avatar,
         },
       });
-      setCommentsRrefesh(!cmtRefresh);
+      dispatch(cmtRefeshCreator(!cmtRefesh));
       setCommentValue("");
     }
   };
@@ -178,7 +183,7 @@ function VideoItem({ video }) {
                   </div>
                 </div>
               )}
-              <Comment refresh={cmtRefresh} videoID={video._id} />
+              <Comment videoID={video._id} />
             </div>
           )}
         </div>
