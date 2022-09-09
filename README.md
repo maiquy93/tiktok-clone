@@ -4,6 +4,13 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Available Scripts
 
+Before run project need to run start server
+
+clone it
+https://github.com/maiquy93/clone-server
+
+my server run in [http://localhost:8000]
+
 In the project directory, you can run:
 
 ### `npm start`
