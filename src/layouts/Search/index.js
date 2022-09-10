@@ -11,10 +11,10 @@ import styles from "./search.module.scss";
 import classNames from "classnames/bind";
 import { useState, useEffect, useRef, useMemo } from "react";
 
-import * as request from "utils/request";
 import { Wrapper } from "Component/Popper";
 import AccountItem from "Component/SearchAccountItmes/AccountItem";
 import { useDebounce } from "hooks";
+import axios from "axios";
 
 const cx = classNames.bind(styles);
 function Searchbox() {
@@ -47,10 +47,9 @@ function Searchbox() {
     const getSearchAPI = async () => {
       try {
         setLoading(true);
-        const res = await request.get(`users/search`, {
+        const res = await axios.get(`http://localhost:8000/users/search`, {
           params: {
-            q: debounceValue,
-            type: "less",
+            name: debounceValue,
           },
         });
         setSearchResult(res.data);
@@ -84,18 +83,19 @@ function Searchbox() {
             {show && (
               <Wrapper>
                 <h3 className={cx("search-title")}>Account</h3>
-                {searchResult.map(result => {
-                  return (
-                    <AccountItem
-                      key={result.id}
-                      fullname={result.full_name}
-                      nickname={result.nickname}
-                      avatar={result.avatar}
-                      check={result.tick}
-                      to={`@${result.nickname}`}
-                    />
-                  );
-                })}
+                {searchResult.map(
+                  (result, index) =>
+                    index < 6 && (
+                      <AccountItem
+                        key={result.id}
+                        fullname={result.name}
+                        nickname={result.nickname}
+                        avatar={result.avatar}
+                        check={result.tick}
+                        to={`@${result.username}`}
+                      />
+                    )
+                )}
               </Wrapper>
             )}
           </div>

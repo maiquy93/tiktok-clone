@@ -8,7 +8,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import styles from "./videoitem.module.scss";
 import classNames from "classnames/bind";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import Comment from "Component/comments/Comment";
 import { useSelector } from "react-redux";
 import { loginStateSelector } from "redux/selector";
@@ -23,8 +23,9 @@ function VideoItem({ video }) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [cmtShow, setcmtShow] = useState(false);
   const [like, setLike] = useState(false);
-  const [numberHeart, setNumberHeart] = useState(video.votes);
+  const [numberHeart, setNumberHeart] = useState(video.votes.length);
   const [commentValue, setCommentValue] = useState("");
+  const [commentData, setCommentData] = useState([]);
 
   const loginState = useSelector(loginStateSelector);
 
@@ -33,7 +34,13 @@ function VideoItem({ video }) {
   const cmtRefesh = useSelector(cmtRefeshSelector);
   const dispatch = useDispatch();
 
-  // const videoWidth = videoRef.current.offsetWidth;
+  //get comment
+  useEffect(() => {
+    axios
+      .get(`http://localhost:8000/comments?vidid=${video._id}`)
+      .then(res => setCommentData(res.data))
+      .catch(err => console.log("Can not connect"));
+  }, [cmtRefesh, video._id]);
 
   //xu ly btn follow
   const currentUser = JSON.parse(localStorage.getItem("userdata"))?._id;
@@ -45,14 +52,24 @@ function VideoItem({ video }) {
   const handlePause = () => {
     videoRef.current.pause();
   };
-
+  useEffect(() => {
+    if (video.votes.includes(currentUser)) setLike(true);
+  }, [currentUser, video.votes]);
   //handlelike
-  function handlelike(_idvideo) {
-    setLike(!like);
-    if ((numberHeart === video.votes) & (like === false)) {
+  console.log(video._id);
+  console.log(currentUser);
+  async function handlelike(_idvideo) {
+    // setLike(!like);
+    if (like === false && numberHeart === video.votes.length) {
+      setLike(true);
+      console.log("run");
+      await axios.put(
+        `http://localhost:8000/videovote?videoID=${video._id}&uservote=${currentUser}`
+      );
       setNumberHeart(prev => prev + 1);
     } else if (like === true) {
-      setNumberHeart(video.votes);
+      setLike(false);
+      setNumberHeart(video.votes.length);
     }
   }
   //
@@ -75,7 +92,7 @@ function VideoItem({ video }) {
 
   return (
     <div className={cx("item-container")}>
-      <a href={video.link}>
+      <a href={`@${video.author.link}`}>
         <img
           alt={video.author?.usernickname}
           className={cx("item-avatar")}
@@ -138,7 +155,7 @@ function VideoItem({ video }) {
             </p>
             <p className={cx("comment-icon")}>
               <FontAwesomeIcon icon={faCommentDots} />
-              <span style={{ marginLeft: "10px" }}>1</span>
+              <span style={{ marginLeft: "10px" }}>{commentData.length}</span>
             </p>
           </div>
           <div className={cx("nav")}>
