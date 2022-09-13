@@ -55,21 +55,27 @@ function VideoItem({ video }) {
   useEffect(() => {
     if (video.votes.includes(currentUser)) setLike(true);
   }, [currentUser, video.votes]);
+
   //handlelike
-  console.log(video._id);
-  console.log(currentUser);
   async function handlelike(_idvideo) {
     // setLike(!like);
-    if (like === false && numberHeart === video.votes.length) {
-      setLike(true);
-      console.log("run");
-      await axios.put(
-        `http://localhost:8000/videovote?videoID=${video._id}&uservote=${currentUser}`
-      );
-      setNumberHeart(prev => prev + 1);
-    } else if (like === true) {
-      setLike(false);
-      setNumberHeart(video.votes.length);
+    const isLogin = JSON.parse(localStorage?.getItem("isLogin"));
+    if (isLogin) {
+      if (like === false && numberHeart === video.votes.length) {
+        setLike(true);
+        console.log("run");
+        await axios.put(
+          `http://localhost:8000/videovote?videoID=${video._id}&uservote=${currentUser}`
+        );
+        setNumberHeart(prev => prev + 1);
+      } else if (like === true) {
+        await axios.put(`http://localhost:8000/videovotecancel`, {
+          videoID: video._id,
+          uservote: currentUser,
+        });
+        setLike(false);
+        setNumberHeart(prev => prev - 1);
+      }
     }
   }
   //

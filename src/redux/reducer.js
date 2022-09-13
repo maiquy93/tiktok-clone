@@ -2,7 +2,7 @@
 const newdata = JSON.parse(localStorage?.getItem("userdata")) || {};
 const initState = {
   loginState: {
-    value: JSON.parse(localStorage.getItem("isLogin")) || false,
+    value: JSON.parse(localStorage?.getItem("isLogin")) || false,
   },
   userdata: {
     name: newdata.name,

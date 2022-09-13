@@ -17,7 +17,6 @@ function CommentChild({ comment }) {
 
   const dispatch = useDispatch();
   const cmtRefesh = useSelector(cmtRefeshSelector);
-  console.log(cmtRefesh);
   const currentUser =
     JSON?.parse(localStorage?.getItem("userdata"))?._id || undefined;
   const handleDeleteShow = () => {
